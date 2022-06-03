@@ -23,7 +23,7 @@
   <div class="container">
     <div class="background"></div>
     <img id="mario" src="assets/mario.gif" alt="mario">
-    <img id="monster" src="assets/koopa.gif" alt="monster">
+    <img id="monster" src="assets/bullet.gif" alt="monster">
     <img id="killer" src="assets/yoshi.gif" alt="killer">
     <div id="score">score : 0</div>       <!-- score는 killer하단에 배치. -->
   </div>
@@ -34,7 +34,8 @@
     <button class="gameStart">GAME START</button>
   </div>
   <div id="gameover">
-    <img id="marioClapping" src="assets/mario_clapping.gif" alt="mario clapping"><div class="restartM"><br>Good Game!</div><br>
+    <img id="marioClapping" src="assets/mario_clapping.gif" alt="mario clapping"><div class="restartM">
+      <br>Good Game!</div><br>
       <button class="restart">Restart</button>
   </div>
 
@@ -117,7 +118,7 @@
 
       //mario가 jump하면 산다.
       if (monsterLeft <= marioRight && isJumping == false) {
-        console.log('die');
+        console.log('mario die');
         // alert('Game Over');
         $('#monster').stop();         //monster 이동 animation 중단
         isGameOver = true;
@@ -156,8 +157,15 @@
 
     //monster가 이동하는 코드 _ monster width보다 크게 적용해서 frame out
     function monsterStart() {
-      let speed = getRandomInt(2000, 3000);   // 1~2초 사이
-      let respawnTime = getRandomInt(2000, 3000); // 1~2초 사이
+      let speed = getRandomInt(6000, 7000);   // 3~4초 사이 
+      let respawnTime = getRandomInt(1000, 2000); // 1~2초 사이  
+
+      //점수 500점 이상이면 mario 크기 증가, 몬스터 속도 증가
+      if(score >= 500){
+        $('#mario').css('width','300px');
+        $('#killer').attr('src','assets/mushroom.gif');
+        speed = getRandomInt(2000, 3000);   // 3~4초 사이
+      }
 
       //monster를 왼쪽 끝(마리오 있는 곳)으로 이동
       $('#monster').animate({ left: '-120px' }, speed, function () {
@@ -174,7 +182,7 @@
       });
     }
 
-    //점수계산
+    //점수 출력
     function setScore(score) {
       $('#score').text(`score : ${score}`);
     }
@@ -197,8 +205,8 @@
       // jQuery로 id mario 점프시키기 _ 올라갔다가 내려오게 위치이동
       // 점프 중이면 점프 끝 (연타 방지)
       // 위로 이동하는 속도 fast 부여, 내려올때는 1초 걸림
-      $('#mario').animate({ bottom: '+=200px' }, 'fast')
-        .animate({ bottom: '-=200px' }, 1000, function () {
+      $('#mario').animate({ bottom: '+=250px' }, 'fast')
+        .animate({ bottom: '-=250px' }, 2000, function () {
           isJumping = false;
         });   //바닥에 붙이기
     }   //function jump() close
