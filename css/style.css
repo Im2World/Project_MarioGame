@@ -1,0 +1,100 @@
+body {
+  overflow-x: hidden;
+  margin: 0;
+}
+
+.container{
+  border: 0px black solid;
+  width: 100vw;
+  height: 600px;
+  position: relative;
+}
+
+.background {
+  position: absolute;
+  width: 300vw;
+  height: 600px;
+  background-image: url('../assets/bg600.jpg');
+  /* background-attachment: fixed; */
+  animation: slide 5s linear infinite;       /* 배경 슬라이드 속도 조절 */
+}
+
+/* mario는 항상 250px로 고정 */
+#mario{
+  width: 200px;
+  position: absolute;
+  bottom: 50px;
+  left: 50px;
+}
+
+#monster{
+  width: 100px;
+  position: absolute;
+  bottom: 50px; 
+  right: 50px;
+}
+
+#killer{
+  display: none;      /* ctrl 버튼 클릭해야 나오게 설정 */
+  position: absolute;
+  width: 100px;
+  left: 220px;
+  bottom: 70px; 
+  right: 50px;
+  /* transform: scaleX(-1);
+  transition: .3s;       */
+}
+
+#score{
+  position: relative;
+  width: 100vw;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  font-size:xx-large;
+}
+
+#start, #gameover{
+  width: 100vw;
+  background-color:white;
+  text-align: center;
+  margin-top: 100px;
+}
+
+#intro{
+  display: none;
+  font-weight: bold;
+  font-size:large; 
+}
+
+#marioClapping{
+  width: 20vw;
+}
+
+.restartM{
+  font-weight: bold;
+  font-size:large; 
+}
+
+.gameStart,.restart{
+  width: 200px;
+  height: 50px;
+  border:none;
+  border-radius: 10px;
+}
+
+.gameStart:hover, .restart:hover{
+  color: white;
+  background-color: green;
+  border-radius: 10px;
+}
+
+
+@keyframes slide {
+  from {
+    left: 0px;
+  }
+  to {
+    left: -70%;
+  }
+}
