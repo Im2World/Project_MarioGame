@@ -184,7 +184,7 @@
           $('#infoTxt500').fadeOut(3000);
         }
         $('#killer').attr('src','assets/mushroom.gif');
-        speed = getRandomInt(1000, 2000);   // 3~4초 사이
+        speed = getRandomInt(1000, 2000);   // 1~2초 사이
         cnt = 1;
       }
 
@@ -244,7 +244,7 @@
 
       // jQuery로 id mario 점프시키기 _ 올라갔다가 내려오게 위치이동
       // 점프 중이면 점프 끝 (연타 방지)
-      // 위로 이동하는 속도 fast 부여, 내려올때는 1초 걸림
+      // 위로 이동하는 속도 fast 부여, 내려올때는 1.2초 걸림
       $('#mario').animate({ bottom: '+=250px' }, 'fast')
         .animate({ bottom: '-=250px' }, 1200, function () {
           isJumping = false;
