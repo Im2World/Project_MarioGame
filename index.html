@@ -8,14 +8,18 @@
   <!-- jQuery import -->
   <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="crossorigin="anonymous"></script>
   <link rel="stylesheet" href="css/style.css"> <!-- css -->
+  <!-- font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+
   <script src="js/script.js"></script> <!-- js -->
-  <!-- 제작기간 : 2022.06.03 ~  -->
+  <!-- 제작기간 : 2022.06.03 ~ 2022.06.06 -->
   <!-- 제작 : Jung HaeIm  -->
   <!-- GitHub : https://github.com/Im2World -->
 
   <!-- Mario, koopa, yoshi gif from here :  https://giphy.com/search/mario-stickers -->
   <!-- background image from here : https://wallpaper.dog/super-mario-bros-desktop-wallpapers -->
-
 </head>
 
 <body>
@@ -26,16 +30,22 @@
     <img id="monster" src="assets/bullet.gif" alt="monster">
     <img id="killer" src="assets/yoshi.gif" alt="killer">
     <div id="score">score : 0</div>       <!-- score는 killer하단에 배치. -->
+    <div id = infoTxt500>
+      Level Up! <br><span class="redText">monster Speed Up!</span>
+    </div>
+    <div id = infoTxt1000>
+      Level Up! <br><span class="redText">Auto attack up to 3000 scores</span>
+    </div>
   </div>
 
   <!-- 초기 페이지 : 게임시작 _ 다시시작 -->
   <div id="start">
-    <img src="assets/mario_head.gif" alt="mario intro"><div id = "intro">Hello, I'm Mario!</div><br>
+    <img src="assets/mario_head.gif" alt="mario intro"><div id = "intro">Hello, I'm Mario!<br><br><div id= info align = 'center'><span>How to play</span><br> space : Jump <br> ctrl : weapon <br><span class="redText">special event for 500, 1500 scores.</span></div></div><br>
     <button class="gameStart">GAME START</button>
   </div>
   <div id="gameover">
-    <img id="marioClapping" src="assets/mario_clapping.gif" alt="mario clapping"><div class="restartM">
-      <br>Good Game!</div><br>
+    <img id="marioClapping" src="assets/mario_clapping.gif" alt="mario clapping">
+    <div class="restartM"><br><div id="finalScore">score : 0</div><br>Good Game!</div><br>
       <button class="restart">Restart</button>
   </div>
 
@@ -52,7 +62,7 @@
       });
 
       $('.restartM').mouseleave(function(){
-      	$('.restartM').css('color','red');
+      	$('.restartM').css('color','blue');
         console.log('color change');
       });     
     });
@@ -87,6 +97,7 @@
       //무기 작동상태이고, 무기랑 monster랑 부딪히면 monster 죽음
       //무기사용시 득점 200점
       if (isKillerStart && monsterLeft <= killerRight) {
+        $('#monster').fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
         score += 200;
 
         setScore(score);
@@ -115,17 +126,19 @@
 
       //monster의 left가 250이상이어야 mario랑 충돌
       let monsterLeft = Number($('#monster').css('left').replace('px', ''));
+      
 
       //mario가 jump하면 산다.
       if (monsterLeft <= marioRight && isJumping == false) {
         console.log('mario die');
         // alert('Game Over');
         $('#monster').stop();         //monster 이동 animation 중단
+        // $('#mario').fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(3000);
         isGameOver = true;
 
         ///다시시작 버튼 출력
-        $('.container').hide();
-        $('#gameover').show();
+        $('.container').hide();   //hide는 좌상단으로 감춰짐, show는 우하단으로 출력
+        $('#gameover').fadeIn(1000);
         isGameStart = false;
       }
     }
@@ -155,20 +168,46 @@
       $('#killer').css('left', '220px').stop().hide();
     }
 
+    let cnt = 0;
+    let cnt2 = 0;
     //monster가 이동하는 코드 _ monster width보다 크게 적용해서 frame out
     function monsterStart() {
-      let speed = getRandomInt(6000, 7000);   // 3~4초 사이 
+      let speed = getRandomInt(3000, 4000);   // 3~4초 사이 
       let respawnTime = getRandomInt(1000, 2000); // 1~2초 사이  
 
       //점수 500점 이상이면 mario 크기 증가, 몬스터 속도 증가
       if(score >= 500){
         $('#mario').css('width','300px');
+        if (cnt === 0){
+          $('#mario').fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);   //빅 마리오 변신시 깜빡임 효과
+          $('#infoTxt500').show();
+          $('#infoTxt500').fadeOut(3000);
+        }
         $('#killer').attr('src','assets/mushroom.gif');
-        speed = getRandomInt(2000, 3000);   // 3~4초 사이
+        speed = getRandomInt(1000, 2000);   // 3~4초 사이
+        cnt = 1;
+      }
+
+      if(score >= 1500 && score <=3000){
+        //누운 마리오
+        if (cnt2 === 0){
+          $('#mario').css('transform','rotate(90deg)').css('bottom','250px').fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+          $('#infoTxt1000').show();
+          $('#infoTxt1000').fadeOut(4000);
+        }
+        cnt2 = 1;
+        $('#killer').css('width','150px'); //killer size up
+        killerStart();
+      } else if(score > 3000){
+        if (cnt2 === 1){
+        $('#mario').css('transform','rotate(0deg)').css('bottom','50px').fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+        }
+        cnt2 = 2;
+        $('.background').css('animation','slide 3s linear infinite');
       }
 
       //monster를 왼쪽 끝(마리오 있는 곳)으로 이동
-      $('#monster').animate({ left: '-120px' }, speed, function () {
+      $('#monster').animate({ left: '-150px' }, speed, function () {
         if (isGameOver == false) {
           score += 100;
           setScore(score);
@@ -182,14 +221,15 @@
       });
     }
 
-    //점수 출력
+    //점수 출력 _ id가 score인 값의 text를 let score로 대체
     function setScore(score) {
       $('#score').text(`score : ${score}`);
+      $('#finalScore').text(`score : ${score}`);
     }
 
     //왼쪽 끝까지 이동 완료 후 다시 monster 초기 위치로 이동
     function monsterInit() {
-       //monster를 우측에서 50px로 위치시키고, left는 -120이던 것을 비워줌.
+       //monster를 우측에서 -150px로 위치시키고, left는 -150이던 것을 비워줌.
       $('#monster').css('right', '-150px').css('left', '').show();
     }
 
@@ -206,7 +246,7 @@
       // 점프 중이면 점프 끝 (연타 방지)
       // 위로 이동하는 속도 fast 부여, 내려올때는 1초 걸림
       $('#mario').animate({ bottom: '+=250px' }, 'fast')
-        .animate({ bottom: '-=250px' }, 2000, function () {
+        .animate({ bottom: '-=250px' }, 1200, function () {
           isJumping = false;
         });   //바닥에 붙이기
     }   //function jump() close
