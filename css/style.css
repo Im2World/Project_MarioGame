@@ -1,6 +1,7 @@
 body {
   overflow-x: hidden;
   margin: 0;
+  font-family: 'VT323', monospace;
 }
 
 .container{
@@ -16,9 +17,13 @@ body {
   height: 600px;
   background-image: url('../assets/bg600.jpg');
   /* background-attachment: fixed; */
-  animation: slide 50s linear infinite;       /* 배경 슬라이드 속도 조절 */
+  animation: slide 10s linear infinite;       /* 배경 슬라이드 속도 조절 */
 }
 
+span{
+  font-style: italic;
+  color:green;
+}
 /* mario는 항상 250px로 고정 */
 #mario{
   width: 200px;
@@ -28,10 +33,11 @@ body {
   /* border: 2px black solid; */
   margin: 0px;
   padding: 0px;
+  
 }
 
 #monster{
-  width: 100px;
+  width: 80px;
   position: absolute;
   bottom: 50px; 
   right: 50px;
@@ -58,17 +64,44 @@ body {
   font-size:xx-large;
 }
 
+#finalScore{
+  color : red;
+  font-size: 3vw;
+  font-style: italic;
+}
+
+#infoTxt500, #infoTxt1000{
+  position: relative;
+  width: 100vw;
+  text-align: center;
+  display: none;
+  color: yellow;
+  font-weight: bold;
+  font-size:4vw;
+}
+
 #start, #gameover{
   width: 100vw;
   background-color:white;
   text-align: center;
   margin-top: 100px;
+  font-size:xx-large;
+  font-family: 'VT323', monospace;
 }
 
 #intro{
   display: none;
   font-weight: bold;
-  font-size:large; 
+}
+
+#info{
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  font-size:x-large;
+  width: 400px;
+  height: 100px;
+  border: 2px black solid;
 }
 
 #marioClapping{
@@ -77,7 +110,6 @@ body {
 
 .restartM{
   font-weight: bold;
-  font-size:large; 
 }
 
 .gameStart,.restart{
@@ -85,6 +117,8 @@ body {
   height: 50px;
   border:none;
   border-radius: 10px;
+  font-size:xx-large;
+  font-family: 'VT323', monospace;
 }
 
 .gameStart:hover, .restart:hover{
@@ -93,6 +127,9 @@ body {
   border-radius: 10px;
 }
 
+.redText{
+  color: red;
+}
 
 @keyframes slide {
   from {
