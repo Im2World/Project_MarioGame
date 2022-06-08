@@ -4,7 +4,7 @@
   
 * Mario Game👉  https://im2world.github.io/Project_MarioGame/index.html
 * HTML, CSS, Javascript, JQuery를 사용해 게임제작
-* 화면구성
+* 화면구성 
 	- Intro page
 	- Game page
 	- Game Over page
